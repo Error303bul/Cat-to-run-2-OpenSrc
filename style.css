@@ -1,0 +1,13 @@
+#game{
+  width:100%;
+  height:100%;
+  background-color:#000000;
+}
+
+.files{
+  display:none
+}
+
+lore{
+  background-color:#696969;
+}

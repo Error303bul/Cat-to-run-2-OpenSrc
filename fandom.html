@@ -1,0 +1,62 @@
+<DOCTYPE html>
+<html>
+  <head>
+    <title>Cat to run 2 Fandom</title>
+    <link rel="stylesheet" href="https://Cat-to-run-2.error303bulh.repl.co/styles"/>
+  </head>
+  <body bgcolor="#457f37">
+    <h1>Cat to run 2 fandom</h1>
+    Cat to run 2 - Это игра сделанная <a href="https://HoGame-Offical-Site.error303bulh.repl.co">HoGame</a>. Уворачивайтесь от пил, собирайте мышей, открывайте новых котов, попадите в топ игроков!<br><br>
+    <input id="searchinput" placeholder="Напишите что нибудь!"/> <button id="searchbutton">Искать</button><br><br><br><br>
+    <div id="results" style="background-color:#fff;">
+      
+    </div>
+    <script>
+      async function getFandomPages() {
+        const response=await fetch("/fandompages")
+        const text=await response.json()
+        fandomPages=text
+        searchPages("")
+      }
+      let fandomPages=null
+      let search=[searchinput, searchbutton]
+
+      function getPageByName(name){
+        for(let i in fandomPages.Pages){
+          if(fandomPages.Pages[i].Name==name){
+            return fandomPages.Pages[i]
+          }
+        }
+        return 0
+      }
+      function openFandomPage(name){
+        const page=getPageByName(name)
+        if(page==0){
+          results.innerHTML="<h1>Страница не найдена</h1><br>Попробуйте поискать с помощью хештегов<br>"
+          return
+        }
+        results.innerHTML=page.Page+"<br><br><br>"+`<lore>${page.Lore}</lore><br>`
+      }
+      
+      function searchPages(request){
+        let add=""
+        if(request==""){
+          for(let i in fandomPages.Pages){
+            add+=`<h3 onclick="openFandomPage('${fandomPages.Pages[i].Name}')">${fandomPages.Pages[i].Name}</h3>`
+          }
+        }else{
+           for(let i in fandomPages.Pages){
+            if((fandomPages.Pages[i].Hashtags.indexOf(request)>-1)||(fandomPages.Pages[i].Name==request)||(fandomPages.Pages[i].Page.indexOf(request)>-1)){
+              add+=`<h3 onclick="openFandomPage('${fandomPages.Pages[i].Name}')">${fandomPages.Pages[i].Name}</h3>`
+            }
+           }
+        }
+        results.innerHTML=add
+      }
+
+      function searchSmth(){searchPages(search[0].value);console.log("Founded: "+search[0].value+".")}
+      search[1].onclick=searchSmth
+      getFandomPages()
+    </script>
+  </body>
+</html>
