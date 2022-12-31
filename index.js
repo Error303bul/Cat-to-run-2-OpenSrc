@@ -29,3 +29,7 @@ app.get('/fandompages',(req,res)=>{
 app.get("/Ugolekimg",(req,res)=>{
   res.sendFile(__dirname+"/img/Уголёк.png")
 })
+
+app.get("/developers",(req,res)=>{
+  res.sendFile(__dirname+"/developers.html")
+})
